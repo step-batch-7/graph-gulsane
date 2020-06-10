@@ -21,8 +21,20 @@ class Queue {
   }
 }
 
+const getDirectedData = function (pairs) {
+  const directedData = {};
+  pairs.forEach(pair => {
+    if (directedData[pair[0]]) {
+      directedData[pair[0]].push(pair[1]);
+    } else {
+      directedData[pair[0]] = [pair[1]];
+    }
+  })
+  return directedData;
+}
+
 const bfs = function (pairs, source, target) {
-  
+
 };
 
-module.exports = {Queue, bfs};
+module.exports = {Queue, getDirectedData,bfs};

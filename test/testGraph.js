@@ -1,5 +1,5 @@
 const assert = require("chai").assert;
-const {Queue} = require("../src/graph.js");
+const {Queue, getDirectedData} = require("../src/graph.js");
 
 describe('Queue', () => {
   describe('enqueue', () => {
@@ -44,3 +44,20 @@ describe('Queue', () => {
     });
   });
 })
+
+describe('getDirectedData', () => {
+
+  it('should return the object with unique key which includes it neighbor', () => {
+    const pairs = [['a', 'b'], ['b', 'c']]
+    const actual = getDirectedData(pairs);
+    const expected = {a: ['b'], b: ['c']};
+    assert.deepStrictEqual(actual, expected);
+  });
+  it('should add the multiple neighbors to its unique parent', () => {
+    const pairs = [['a', 'b'], ['b', 'c'], ['a', 'm'], ['b', 'n']]
+    const actual = getDirectedData(pairs);
+    const expected = {a: ['b', 'm'], b: ['c', 'n']};
+    assert.deepStrictEqual(actual, expected);
+  });
+
+});
