@@ -34,7 +34,27 @@ const getDirectedData = function (pairs) {
 }
 
 const bfs = function (pairs, source, target) {
+  const directedData = getDirectedData(pairs.slice());
+  const queue = new Queue();
+  queue.enqueue(source);
+  const visitedNeighbors = [];
 
+  while (!queue.isEmpty) {
+    const node = queue.dequeue;
+    visitedNeighbors.push(node);
+    if (node === target) {
+      return true;
+    }
+    const neighbors = directedData[node];
+    if (neighbors) {
+      neighbors.forEach(neighbor => {
+        if (!visitedNeighbors.includes(neighbor)) {
+          queue.enqueue(neighbor);
+        }
+      })
+    }
+  }
+  return false;
 };
 
-module.exports = {Queue, getDirectedData,bfs};
+module.exports = {Queue, getDirectedData, bfs};
