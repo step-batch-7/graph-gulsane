@@ -4,22 +4,6 @@
 // To => to 
 // Should return true.
 
-class Queue {
-  constructor (queue) {
-    this.queue = queue;
-  }
-  enqueue(element) {
-    if (element && !this.queue.includes(element)) {
-      this.queue.push(element);
-    }
-  }
-  get dequeue() {
-    return this.queue.shift();
-  }
-  get isEmpty() {
-    return this.queue[0] ? false : true;
-  }
-}
 
 const getDirectedData = function (pairs) {
   const directedData = {};
@@ -35,29 +19,26 @@ const getDirectedData = function (pairs) {
 
 const bfs = function (pairs, source, target) {
   const directedData = getDirectedData(pairs.slice());
-  const queue = new Queue(directedData[source] || []);
+  const queue = directedData[source] || [];
   const visitedNeighbors = [];
 
-  while (!queue.isEmpty) {
-    const node = queue.dequeue;
+  while (queue.length > 0) {
+    const node = queue.shift();
     visitedNeighbors.push(node);
-
     if (node === target) {
       return true;
     }
-
     const neighbors = directedData[node];
     if (neighbors) {
       neighbors.forEach(neighbor => {
         if (!visitedNeighbors.includes(neighbor)) {
-          queue.enqueue(neighbor);
+          queue.push(neighbor);
         }
       })
     }
-
   }
-
   return false;
 };
 
-module.exports = {Queue, getDirectedData, bfs};
+
+module.exports = {getDirectedData, bfs};
