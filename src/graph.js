@@ -5,8 +5,8 @@
 // Should return true.
 
 class Queue {
-  constructor () {
-    this.queue = [];
+  constructor (queue) {
+    this.queue = queue;
   }
   enqueue(element) {
     if (element && !this.queue.includes(element)) {
@@ -35,16 +35,17 @@ const getDirectedData = function (pairs) {
 
 const bfs = function (pairs, source, target) {
   const directedData = getDirectedData(pairs.slice());
-  const queue = new Queue();
-  queue.enqueue(source);
+  const queue = new Queue(directedData[source] || []);
   const visitedNeighbors = [];
 
   while (!queue.isEmpty) {
     const node = queue.dequeue;
     visitedNeighbors.push(node);
+
     if (node === target) {
       return true;
     }
+
     const neighbors = directedData[node];
     if (neighbors) {
       neighbors.forEach(neighbor => {
@@ -53,7 +54,9 @@ const bfs = function (pairs, source, target) {
         }
       })
     }
+
   }
+
   return false;
 };
 
